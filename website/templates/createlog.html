@@ -1,0 +1,124 @@
+{% extends "base.html" %} {% block title %}Create pond monitoring log{% endblock %} {% block
+content %}
+
+<form method="POST">
+  <br/>
+  <h3>Pond Log</h3>
+  <br/>
+  <div class="form-group">
+    <label for="pond_name">Pond Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="pond_name"
+      name="pond_name"
+      placeholder="Enter Pond Name"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="date">Date</label>
+    <input
+      type="text"
+      class="form-control"
+      id="date"
+      name="date"
+      placeholder="Enter Date"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="time">Time</label>
+    <input
+      type="text"
+      class="form-control"
+      id="time"
+      name="time"
+      placeholder="Enter Time"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="weather">Weather</label>
+    <input
+      type="text"
+      class="form-control"
+      id="weather"
+      name="weather"
+      placeholder="Enter Weather"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="temperature">Temperature</label>
+    <input
+      type="number"
+      class="form-control"
+      id="temperature"
+      name="temperature"
+      placeholder="Enter Temperature"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="forebay_ph">Forebay pH</label>
+    <input
+      type="number"
+      step="0.01"
+      class="form-control"
+      id="forebay_ph"
+      name="forebay_ph"
+      placeholder="Enter Forebay pH"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="forebay_ntu">Forebay NTU</label>
+    <input
+      type="number"
+      step="0.01"
+      class="form-control"
+      id="forebay_ntu"
+      name="forebay_ntu"
+      placeholder="Enter Forebay NTU"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="main_ph">Main pH</label>
+    <input
+      type="number"
+      step="0.01"
+      class="form-control"
+      id="main_ph"
+      name="main_ph"
+      placeholder="Enter Main pH"
+    />
+  </div>
+  <br />
+  <div class="form-group">
+    <label for="main_ntu">Main NTU</label>
+    <input
+      type="number"
+      step="0.01"
+      class="form-control"
+      id="main_ntu"
+      name="main_ntu"
+      placeholder="Enter Main NTU"
+    />
+  </div>
+  <br/>
+  <div class="form-group">
+    <label for="ibc_level">IBC Level</label>
+    <input
+      type="number"
+      class="form-control"
+      id="ibc_level"
+      name="ibc_level"
+      placeholder="Enter IBC Level"
+    />
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
