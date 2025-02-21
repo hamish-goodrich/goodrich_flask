@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify, Response
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
 from flask_login import login_required, current_user
 from .models import Note, Monitoring_log
 from . import db
@@ -12,24 +12,15 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    # logs = Monitoring_log.query
-    # if request.method == 'POST': 
-    #     note = request.form.get('note')#Gets the note from the HTML 
-
-    #     if len(note) < 1:
-    #         flash('Note is too short!', category='error') 
-    #     else:
-    #         new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-    #         db.session.add(new_note) #adding the note to the database 
-    #         db.session.commit()
-    #         flash('Note added!', category='success')
 
     return render_template("dashboard.html", user=current_user)
 
 @views.route('/pond_monitoring', methods=['GET', 'POST'])
 @login_required
 def pond_monitoring():
-    return render_template("pond_monitoring.html", user=current_user)
+    logs = Monitoring_log.query
+
+    return render_template("pond_monitoring.html", user=current_user, logs=logs)
 
 @views.route('/bench_testing', methods=['GET', 'POST'])
 @login_required
@@ -95,7 +86,7 @@ def createlog():
         db.session.add(new_log)
         db.session.commit()
         flash('Log added', category='success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.pond_monitoring'))
 
     return render_template("createlog.html", user=current_user)
 
