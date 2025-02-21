@@ -6,14 +6,21 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Pond Name</th>
-          <th scope="col">Date</th>
-          <th scope="col">Time</th>
-          <th scope="col">Temperature (c)</th>
-          <th scope="col">Forebay pH</th>
-          <th scope="col">Forebay NTU</th>
-          <th scope="col">Main pH</th>
-          <th scope="col">Main NTU</th>
+          <th scope="col">Date </th>
+          <th scope="col">Time </th>
+          <th scope="col">Weather </th>
+          <th scope="col">Temp (c)</th>
           <th scope="col">IBC Level (L)</th>
+          <th scope="col">FB pH  </th>
+          <th scope="col">FB Temp</th>
+          <th scope="col">FB NTU </th>
+          <th scope="col">MN pH  </th>
+          <th scope="col">MN Temp</th>
+          <th scope="col">MN NTU </th>
+          <th scope="col">Fl Flow</th>
+          <th scope="col">Fb Flow</th>
+          <th scope="col">Mn Flow</th>
+          <th scope="col">Dc Flow</th>
           <th scope="col">Technician</th>
         </tr>
       </thead>
@@ -25,12 +32,19 @@
               <td>{{ log.pond_name }}</td>
               <td>{{ log.date }}</td>
               <td>{{ log.time }}</td>
+              <td>{{ log.weather }}</td>
               <td>{{ log.temperature }}</td>
+              <td>{{ log.ibc_level }}</td>
               <td>{{ log.forebay_ph }}</td>
+              <td>{{ log.forebay_temp }}</td>
               <td>{{ log.forebay_ntu }}</td>
               <td>{{ log.main_ph }}</td>
+              <td>{{ log.main_temp }}</td>
               <td>{{ log.main_ntu }}</td>
-              <td>{{ log.ibc_level }}</td>
+              <td>{{ log.flume_flow }}</td>
+              <td>{{ log.forebay_flow }}</td>
+              <td>{{ log.main_flow }}</td>
+              <td>{{ log.decant_flow }}</td>
               <td>{{ log.author }}</td>
               <td>
                 <form action="{{ url_for('views.delete_log') }}" method="POST" style="display:inline;">
