@@ -11,20 +11,46 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
-def home():
-    logs = Monitoring_log.query
-    if request.method == 'POST': 
-        note = request.form.get('note')#Gets the note from the HTML 
+def dashboard():
+    # logs = Monitoring_log.query
+    # if request.method == 'POST': 
+    #     note = request.form.get('note')#Gets the note from the HTML 
 
-        if len(note) < 1:
-            flash('Note is too short!', category='error') 
-        else:
-            new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
-            db.session.add(new_note) #adding the note to the database 
-            db.session.commit()
-            flash('Note added!', category='success')
+    #     if len(note) < 1:
+    #         flash('Note is too short!', category='error') 
+    #     else:
+    #         new_note = Note(data=note, user_id=current_user.id)  #providing the schema for the note 
+    #         db.session.add(new_note) #adding the note to the database 
+    #         db.session.commit()
+    #         flash('Note added!', category='success')
 
-    return render_template("home.html", user=current_user, logs=logs)
+    return render_template("dashboard.html", user=current_user)
+
+@views.route('/pond_monitoring', methods=['GET', 'POST'])
+@login_required
+def pond_monitoring():
+    return render_template("pond_monitoring.html", user=current_user)
+
+@views.route('/bench_testing', methods=['GET', 'POST'])
+@login_required
+def bench_testing():
+    return render_template("bench_testing.html", user=current_user)
+
+@views.route('/service_requests', methods=['GET', 'POST'])
+@login_required
+def service_requests():
+    return render_template("service_requests.html", user=current_user)
+
+@views.route('/stock_take', methods=['GET', 'POST'])
+@login_required
+def stock_take():
+    return render_template("stock_take.html", user=current_user)
+
+@views.route('/job_cards', methods=['GET', 'POST'])
+@login_required
+def job_cards():
+    return render_template("job_cards.html", user=current_user)
+
 
 
 @views.route('/delete-note', methods=['POST'])
@@ -40,6 +66,7 @@ def delete_note():
     return jsonify({})
 
 @views.route('/createlog', methods=['GET', 'POST'])
+@login_required
 def createlog():
 
     if request.method == 'POST':

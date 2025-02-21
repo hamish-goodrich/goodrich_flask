@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<br/>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="{{ url_for('views.pond_monitoring') }}">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/pond_monitoring.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Pond Monitoring</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="{{ url_for('views.job_cards') }}">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/job_cards.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Job Cards</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="{{ url_for('views.service_requests') }}">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/service_requests.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Service Requests</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="https://green1telemetry.nz/">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/telemetry.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Unit Telemetry</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="{{ url_for('views.stock_take') }}">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/stock_take.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Stock Take</h5>
+            </div>
+        </div>
+        
+    </div>
+    <div class="col">
+        
+        <div class="card border-success text-bg-light">
+            <a href="{{ url_for('views.bench_testing') }}">
+            <img width="600x" height="200x"src="{{ url_for('static', filename='images/bench_testing.png')}}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+            <h5 class="card-title link-underline-opacity-0">Bench Testing</h5>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
