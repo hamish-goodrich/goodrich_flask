@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from flask_login import login_required, current_user
 from .models import Note, Monitoring_log
 from . import db
@@ -19,7 +19,6 @@ def dashboard():
 @login_required
 def pond_monitoring():
     logs = Monitoring_log.query
-
     return render_template("pond_monitoring.html", user=current_user, logs=logs)
 
 @views.route('/bench_testing', methods=['GET', 'POST'])
@@ -43,6 +42,18 @@ def job_cards():
     return render_template("job_cards.html", user=current_user)
 
 
+@views.route('/delete-log', methods=['POST'])
+def delete_log():
+    log_id = request.form.get('id')  # Get the ID from the form submission
+    if not log_id:
+        return jsonify({"error": "Log ID is required"}), 400
+    log_entry = Monitoring_log.query.get(log_id)
+    if not log_entry:
+        return jsonify({"error": "Log entry not found"}), 404
+    db.session.delete(log_entry)
+    db.session.commit()
+    return redirect(url_for('views.pond_monitoring'))  # Redirect back to the home page
+
 
 @views.route('/delete-note', methods=['POST'])
 def delete_note():  
@@ -53,7 +64,6 @@ def delete_note():
         if note.user_id == current_user.id:
             db.session.delete(note)
             db.session.commit()
-
     return jsonify({})
 
 @views.route('/createlog', methods=['GET', 'POST'])
@@ -100,14 +110,14 @@ def download_csv():
     
     # Write header
     writer.writerow([
-        "ID", "Pond Name", "Date", "Time", "Temperature", "Forebay pH", "Forebay NTU", 
+        "Pond Name", "Date", "Time", "Temperature", "Forebay pH", "Forebay NTU", 
         "Main pH", "Main NTU", "IBC Level", "Author"
     ])
     
     # Write data rows
     for log in logs:
         writer.writerow([
-            log.id, log.pond_name, log.date, log.time, log.temperature, 
+            log.pond_name, log.date, log.time, log.temperature, 
             log.forebay_ph, log.forebay_ntu, log.main_ph, log.main_ntu, 
             log.ibc_level, log.author
         ])
