@@ -1,6 +1,51 @@
-{% extends "base.html" %}
-{% block content %}
-<br/>
-Floc Units
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <h1 align="center">Ful debug:</h1>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Pond Name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+          <th scope="col">Temperature (c)</th>
+          <th scope="col">Forebay pH</th>
+          <th scope="col">Forebay NTU</th>
+          <th scope="col">Main pH</th>
+          <th scope="col">Main NTU</th>
+          <th scope="col">IBC Level (L)</th>
+          <th scope="col">Technician</th>
+        </tr>
+      </thead>
+      <tbody>
 
-{% endblock %}
+          {% for log in logs %}
+            <tr>
+              <th scope="row">{{ loop.index }}</th>
+              <td>{{ log.pond_name }}</td>
+              <td>{{ log.date }}</td>
+              <td>{{ log.time }}</td>
+              <td>{{ log.temperature }}</td>
+              <td>{{ log.forebay_ph }}</td>
+              <td>{{ log.forebay_ntu }}</td>
+              <td>{{ log.main_ph }}</td>
+              <td>{{ log.main_ntu }}</td>
+              <td>{{ log.ibc_level }}</td>
+              <td>{{ log.author }}</td>
+              <td>
+                <form action="{{ url_for('views.delete_log') }}" method="POST" style="display:inline;">
+                  <input type="hidden" name="id" value="{{ log.id }}">
+                  <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
+                </form>
+              </td>
+
+            </tr>
+          {% endfor %}
+        
+      </tbody>
+    </table>
+    <div align="center">
+      <a href="{{ url_for('views.download_csv') }}" class="btn btn-success">Download CSV</a>
+    </div>
+    {% endblock %}
+    

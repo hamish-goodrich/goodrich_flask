@@ -50,7 +50,8 @@ def job_cards():
 @views.route('/floc_units', methods=['GET', 'POST'])
 @login_required
 def floc_units():
-    return render_template("floc_units.html", user=current_user)
+    logs = Monitoring_log.query.all()
+    return render_template("floc_units.html", logs=logs user=current_user)
 
 @views.route("/view_log/<int:log_id>")
 def view_log(log_id):
@@ -257,15 +258,15 @@ def download_csv():
 
 @views.route('/upload_log', methods=['POST'])
 def upload_log():
+    data = request.get_json()  # Get JSON from Flutter
     try:
-        data = request.get_json()  # Get JSON from Flutter
+        
         date=data.get("date"),
         dt = datetime.strptime(date, '%d/%m/%Y').date(),
         start = dt - timedelta(days=dt.weekday()),
         end = start + timedelta(days=6),
         week_ending = end.strftime('%d/%b/%Y'),
         print("creating new log")
-        print(data)
         # Create a new Monitoring_log entry
         # new_log = Monitoring_log(
         # pond_name=data.get("pond_name"),
