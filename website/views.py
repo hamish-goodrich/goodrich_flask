@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
 from flask_login import login_required, current_user
-from .models import Note, Monitoring_log
+from .models import Service_request, Monitoring_log
 from . import db
 import json
 import csv
