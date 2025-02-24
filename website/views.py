@@ -262,8 +262,8 @@ def upload_log():
         data = request.get_json()  # Get JSON from Flutter
 
         # # Extract date properly
-        # date = data.get("date")  # No comma
-        # dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
+        date = data.get("date")  # No comma
+        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
         
         # # Calculate week ending correctly
         # start = dt - timedelta(days=dt.weekday())  # Monday of the week
@@ -273,8 +273,8 @@ def upload_log():
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
             pond_name=data.get("pond_name"),
-            date="12/04/2024",
-            week_ending="12/04/2024",  # Use corrected week ending
+            date=dt,
+            week_ending="week_ending",  # Use corrected week ending
             time=data.get("time"),
             weather=data.get("weather"),
             temperature=data.get("temperature"),
