@@ -258,22 +258,23 @@ def download_csv():
 @views.route('/upload_log', methods=['POST'])
 def upload_log():
     try:
+        flash('Log added', category='success')
         data = request.get_json()  # Get JSON from Flutter
 
-        # Extract date properly
-        date = data.get("date")  # No comma
-        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
+        # # Extract date properly
+        # date = data.get("date")  # No comma
+        # dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
         
-        # Calculate week ending correctly
-        start = dt - timedelta(days=dt.weekday())  # Monday of the week
-        end = start + timedelta(days=6)  # Sunday of the same week
-        week_ending = end.strftime('%d/%b/%Y')  # Format correctly
+        # # Calculate week ending correctly
+        # start = dt - timedelta(days=dt.weekday())  # Monday of the week
+        # end = start + timedelta(days=6)  # Sunday of the same week
+        # week_ending = end.strftime('%d/%b/%Y')  # Format correctly
         
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
             pond_name=data.get("pond_name"),
-            date=date,
-            week_ending=week_ending,  # Use corrected week ending
+            date="12/04/2024",
+            week_ending="12/04/2024",  # Use corrected week ending
             time=data.get("time"),
             weather=data.get("weather"),
             temperature=data.get("temperature"),
