@@ -5,6 +5,8 @@ from . import db
 import json
 import csv
 from io import StringIO
+from datetime import datetime, timedelta
+import pendulum
 
 views = Blueprint('views', __name__)
 
@@ -18,8 +20,12 @@ def dashboard():
 @views.route('/pond_monitoring', methods=['GET', 'POST'])
 @login_required
 def pond_monitoring():
-    logs = Monitoring_log.query
-    return render_template("pond_monitoring.html", user=current_user, logs=logs)
+    logs = Monitoring_log.query.all()  # Fetch all logs from DB
+    # Get unique week endings from logs
+    unique_weeks = sorted(set(log.week_ending for log in logs), reverse=True)
+    # Get selected week from URL, default to the latest week
+    selected_week = request.args.get("selected_week", unique_weeks[0] if unique_weeks else None)
+    return render_template("pond_monitoring.html", logs=logs, unique_weeks=unique_weeks, selected_week=selected_week, user=current_user)
 
 @views.route('/bench_testing', methods=['GET', 'POST'])
 @login_required
@@ -40,6 +46,65 @@ def stock_take():
 @login_required
 def job_cards():
     return render_template("job_cards.html", user=current_user)
+
+@views.route('/floc_units', methods=['GET', 'POST'])
+@login_required
+def floc_units():
+    return render_template("floc_units.html", user=current_user)
+
+@views.route("/view_log/<int:log_id>")
+def view_log(log_id):
+    log = Monitoring_log.query.get_or_404(log_id)  # Fetch log from database
+    return render_template("view_log.html", log=log, user=current_user)
+
+@views.route('/edit_log/<int:log_id>', methods=['GET', 'POST'])
+def edit_log(log_id):
+    log = Monitoring_log.query.get_or_404(log_id)
+
+    if request.method == 'POST':
+        log.date = request.form['date']
+        dt = datetime.strptime(log.date, '%d/%m/%Y').date()
+        start = dt - timedelta(days=dt.weekday())
+        end = start + timedelta(days=6)
+        log.week_ending = end.strftime('%d/%b/%Y')
+
+        log.time        = request.form['time']
+        log.weather     = request.form['weather']
+        log.temp        = request.form['temp']
+        log.ibc_level   = request.form['ibc_level']
+        log.flume_flow  = 'flume_flow' in request.form  # True if checked, False otherwise
+        log.forebay_flow = 'forebay_flow' in request.form  # True if checked, False otherwise
+        log.main_flow   = 'main_flow' in request.form  # True if checked, False otherwise
+        log.decant_flow = 'decant_flow' in request.form  # True if checked, False otherwise
+        log.floc_type   = request.form['floc_type']
+        log.unit_type   = request.form['unit_type']
+        log.company     = request.form['company']
+        log.author      = request.form['author']
+
+        log.forebay_sample     = 'forebay_sample' in request.form  # True if checked, False otherwise
+        log.forebay_ph         = request.form['forebay_ph']
+        log.forebay_ntu        = request.form['forebay_ntu']
+        log.forebay_temp       = request.form['forebay_temp']
+        log.forebay_height     = request.form['forebay_height']
+        log.forebay_comments   = request.form['forebay_comments']
+        log.forebay_floc_dosed = request.form['forebay_floc_dosed']
+        log.forebay_lime_dosed = request.form['forebay_lime_dosed']
+        log.forebay_silt       = request.form['forebay_silt']
+
+        log.main_sample     = 'main_sample' in request.form  # True if checked, False otherwise
+        log.main_ph         = request.form['main_ph']
+        log.main_ntu        = request.form['main_ntu']
+        log.main_temp       = request.form['main_temp']
+        log.main_height     = request.form['main_height']
+        log.main_comments   = request.form['main_comments']
+        log.main_floc_dosed = request.form['main_floc_dosed']
+        log.main_lime_dosed = request.form['main_lime_dosed']
+        log.main_silt       = request.form['main_silt']
+
+        db.session.commit()
+        return redirect(url_for('views.view_log', log_id=log.id, user=current_user))
+
+    return render_template('edit_log.html', log=log, user=current_user)
 
 
 @views.route('/delete-log', methods=['POST'])
@@ -69,10 +134,13 @@ def delete_note():
 @views.route('/createlog', methods=['GET', 'POST'])
 @login_required
 def createlog():
-
     if request.method == 'POST':
         pond_name    = request.form.get('pond_name')
         date    = request.form.get('date')
+        dt = datetime.strptime(date, '%d/%m/%Y').date()
+        start = dt - timedelta(days=dt.weekday())
+        end = start + timedelta(days=6)
+        week_ending = end.strftime('%d/%b/%Y')
         time    = request.form.get('time')
         weather = request.form.get('weather')
         temperature = request.form.get('temperature')
@@ -92,7 +160,8 @@ def createlog():
                                  main_ph=main_ph,
                                  main_ntu=main_ntu,
                                  ibc_level=ibc_level, 
-                                 author=current_user.full_name)
+                                 author=current_user.full_name,
+                                 week_ending=week_ending,)
         db.session.add(new_log)
         db.session.commit()
         flash('Log added', category='success')
@@ -146,8 +215,9 @@ def download_csv():
         "floc_type",
         "author",
         "company",
+        "week_ending",
     ])
-    
+
     # Write data rows
     for log in logs:
         writer.writerow([
@@ -186,7 +256,8 @@ def download_csv():
             log.unit_type,
             log.floc_type,
             log.author,
-            log.company])
+            log.company,
+            log.week_ending],)
     
     output.seek(0)
 
@@ -198,13 +269,21 @@ def download_csv():
 
 @views.route('/upload_log', methods=['POST'])
 def upload_log():
+    start = datetime
+    end = datetime
+
     try:
         data = request.get_json()  # Get JSON from Flutter
+        date=data.get("date"),
+        dt = datetime.strptime(date, '%d/%m/%Y').date(),
+        start = dt - timedelta(days=dt.weekday()),
+        end = start + timedelta(days=6),
 
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
         pond_name=data.get("pond_name"),
-        date=data.get("date"),
+        date=date,
+        week_ending = end.strftime('%d/%b/%Y'),
         time=data.get("time"),
         weather=data.get("weather"),
         temperature=data.get("temperature"),
@@ -242,7 +321,7 @@ def upload_log():
         unit_type=data.get("unit_type"),
         floc_type=data.get("floc_type"),
         author=data.get("author"),
-        company=data.get("company")
+        company=data.get("company"),
         )
 
         # Add to database

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}View Log{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Back Button -->
+  <a href="{{ url_for('views.pond_monitoring') }}" class="btn btn-outline-secondary mb-3">&larr; Back to Logs</a>
+
+  <!-- Edit Log Button -->
+  <a href="{{ url_for('views.edit_log', log_id=log.id) }}" class="btn btn-outline-success mb-3">Edit Log</a>
+
+  <!-- Edit Log Button -->
+  <a href="{{ url_for('views.delete_log', log_id=log.id) }}" class="btn btn-outline-danger mb-3">Delete log</a>
+
+  <!-- Admin Details Card -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-header bg-success text-white">
+      <h3 class="mb-0">Log Details</h3>
+    </div>
+    <div class="card-body row">
+      <div class="col-md-6">
+        <p><strong>Pond Name:</strong> {{ log.pond_name }}</p>
+        <p><strong>Date:</strong> {{ log.date }}</p>
+        <p><strong>Time:</strong> {{ log.time }}</p>
+        <p><strong>Weather:</strong> {{ log.weather }}</p>
+        <p><strong>Temperature (°C):</strong> {{ log.temp }}</p>
+        <p><strong>IBC Level (L):</strong> {{ log.ibc_level }}</p> 
+        <p><strong>Flume Flow:&nbsp;&nbsp;&nbsp;</strong>
+        {% if log.flume_flow %}
+            ✅
+        {% else %}
+            ⬜
+        {% endif %}
+        </p>
+        <p><strong>Forebay Flow:  </strong>
+        {% if log.forebay_flow %}
+            ✅
+        {% else %}
+            ⬜
+        {% endif %}
+        </p>
+        <p><strong>Main Flow:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+        {% if log.main_flow %}
+            ✅
+        {% else %}
+            ⬜
+        {% endif %}
+        </p>
+        <p><strong>Decant Flow:&nbsp;&nbsp;</strong>
+        {% if log.decant_flow %}
+            ✅
+        {% else %}
+            ⬜
+        {% endif %}
+        </p>
+    </div>
+      <div class="col-md-6">
+        <p><strong>Flocculant:</strong> {{ log.floc_type }}</p>   
+        <p><strong>Unit Type:</strong> {{ log.unit_type }}</p>   
+        <p><strong>Client Name:</strong> {{ log.company }}</p>
+        <p><strong>Technician:</strong> {{ log.author }}</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Forebay Details Card -->
+  <div class="card shadow-lg mb-4">
+    <div class="card-header bg-success text-white">
+      <h3 class="mb-0">Forebay Details</h3>
+    </div>
+    <div class="card-body row">
+      <div class="col-md-6">
+        <p><strong>Sample Taken:&nbsp;&nbsp;</strong>
+            {% if log.forebay_sample %}
+                ✅
+            {% else %}
+                ⬜
+            {% endif %}
+        </p>
+        <p><strong>pH:</strong> {{ log.forebay_ph }}</p>
+        <p><strong>Temperature (°C):</strong> {{ log.forebay_temp }}</p>
+        <p><strong>Turbidity (NTU):</strong> {{ log.forebay_ntu }}</p>
+        <p><strong>Water level:</strong> {{ log.forebay_height }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Flocculant Dosed:</strong> {{ log.forebay_floc_dosed }}</p>
+        <p><strong>Lime Dosed:</strong> {{ log.forebay_lime_dosed }}</p>
+        <p><strong>Silt Level:</strong> {{ log.forebay_silt }}</p>
+        <p><strong>Comments:</strong> {{ log.forebay_comments if log.forebay_comments else "No comments" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Pond Details Card -->
+  <div class="card shadow-lg">
+    <div class="card-header bg-success text-white">
+      <h3 class="mb-0">Main Pond Details</h3>
+    </div>
+    <div class="card-body row">
+      <div class="col-md-6">
+        <p><strong>Sample Taken:&nbsp;&nbsp;</strong>
+            {% if log.main_sample %}
+                ✅
+            {% else %}
+                ⬜
+            {% endif %}
+        </p>
+        <p><strong>pH:</strong> {{ log.main_ph }}</p>
+        <p><strong>Temperature (°C):</strong> {{ log.main_temp }}</p>
+        <p><strong>Turbidity (NTU):</strong> {{ log.main_ntu }}</p>
+        <p><strong>Water level:</strong> {{ log.main_height }}</p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Flocculant Dosed:</strong> {{ log.main_floc_dosed }}</p>
+        <p><strong>Lime Dosed:</strong> {{ log.main_lime_dosed }}</p>
+        <p><strong>Silt Level:</strong> {{ log.main_silt }}</p>
+        <p><strong>Comments:</strong> {{ log.main_comments if log.main_comments else "No comments" }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

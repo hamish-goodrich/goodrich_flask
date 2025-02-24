@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Log{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Back Button -->
+  <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-outline-secondary mb-3">&larr; Back to Log</a>
+
+  <form action="{{ url_for('views.edit_log', log_id=log.id) }}" method="POST">
+    <!-- Admin Details Card -->
+    <div class="card shadow-lg mb-4">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Edit Log Details</h3>
+      </div>
+      <div class="card-body row">
+        <div class="col-md-6">
+          <label><strong>Pond Name</strong></label>
+          <input type="text" class="form-control" name="pond_name" value="{{ log.pond_name }}" required>
+          
+          <label><strong>Date</strong></label>
+          <input type="text" class="form-control" name="date" value="{{ log.date }}" required>
+          
+          <label><strong>Time</strong></label>
+          <input type="text" class="form-control" name="time" value="{{ log.time }}" required>
+          
+          <label><strong>Weather</strong></label>
+          <input type="text" class="form-control" name="weather" value="{{ log.weather }}">
+          
+          <label><strong>Temperature (°C)</strong></label>
+          <input type="number" class="form-control" name="temp" value="{{ log.temp }}">
+          
+          <label><strong>IBC Level (L)</strong></label>
+          <input type="number" class="form-control" name="ibc_level" value="{{ log.ibc_level }}">
+          
+          <label class="form-label"><strong>Flume Flow:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+
+          <label class="form-label"><strong>Forebay Flow:&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+
+          <label class="form-label"><strong>Main Flow:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+
+          <label class="form-label"><strong>Decant Flow:&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+
+        </div>
+        <div class="col-md-6">
+          <label><strong>Flocculant</strong></label>
+          <input type="text" class="form-control" name="floc_type" value="{{ log.floc_type }}">
+          
+          <label><strong>Unit Type</strong></label>
+          <input type="text" class="form-control" name="unit_type" value="{{ log.unit_type }}">
+          
+          <label><strong>Client Name</strong></label>
+          <input type="text" class="form-control" name="company" value="{{ log.company }}">
+          
+          <label><strong>Technician</strong></label>
+          <input type="text" class="form-control" name="author" value="{{ log.author }}">
+        </div>
+      </div>
+    </div>
+
+    <!-- Forebay Details Card -->
+    <div class="card shadow-lg mb-4">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Forebay Details</h3>
+      </div>
+      <div class="card-body row">
+        <div class="col-md-6">
+          <label><strong>Sample Taken&nbsp;&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="forebay_sample" {% if log.forebay_sample %} checked {% endif %}><br/>
+          
+          <label><strong>pH</strong></label>
+          <input type="number" step="0.01" class="form-control" name="forebay_ph" value="{{ log.forebay_ph }}">
+
+          <label><strong>Temperature (°C):</strong></label>
+          <input type="number" step="0.01" class="form-control" name="forebay_temp" value="{{ log.forebay_temp }}">
+
+          <label><strong>Turbidity (NTU)</strong></label>
+          <input type="number" step="0.01" class="form-control" name="forebay_ntu" value="{{ log.forebay_ntu }}">
+
+          <label><strong>Water level</strong></label>
+          <input type="number" class="form-control" name="forebay_height" value="{{ log.forebay_height }}">
+        </div>
+        <div class="col-md-6">
+          <label><strong>Flocculant Dosed</strong></label>
+          <input type="text" class="form-control" name="forebay_floc_dosed" value="{{ log.forebay_floc_dosed }}">
+          
+          <label><strong>Lime Dosed</strong></label>
+          <input type="text" class="form-control" name="forebay_lime_dosed" value="{{ log.forebay_lime_dosed }}">
+
+          <label><strong>Silt Level</strong></label>
+          <input type="text" class="form-control" name="forebay_silt" value="{{ log.forebay_silt }}">
+          
+          <label><strong>Comments</strong></label>
+          <textarea class="form-control" name="forebay_comments">{{ log.forebay_comments }}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Pond Details Card -->
+    <div class="card shadow-lg">
+      <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Main Pond Details</h3>
+      </div>
+      <div class="card-body row">
+        <div class="col-md-6">
+          <label><strong>Sample Taken&nbsp;&nbsp;&nbsp;</strong></label>
+          <input type="checkbox" name="main_sample" {% if log.main_sample %} checked {% endif %}><br/>
+          
+          <label><strong>pH</strong></label>
+          <input type="number" step="0.01" class="form-control" name="main_ph" value="{{ log.main_ph }}">
+
+          <label><strong>Temperature (°C):</strong></label>
+          <input type="number" step="0.01" class="form-control" name="main_temp" value="{{ log.main_temp }}">
+          
+          <label><strong>Turbidity (NTU)</strong></label>
+          <input type="number" step="0.01" class="form-control" name="main_ntu" value="{{ log.main_ntu }}">
+
+          <label><strong>Water level</strong></label>
+          <input type="number" class="form-control" name="main_height" value="{{ log.main_height }}">
+        </div>
+        <div class="col-md-6">
+          <label><strong>Flocculant Dosed</strong></label>
+          <input type="text" class="form-control" name="main_floc_dosed" value="{{ log.main_floc_dosed }}">
+          
+          <label><strong>Lime Dosed</strong></label>
+          <input type="text" class="form-control" name="main_lime_dosed" value="{{ log.main_lime_dosed }}">
+
+          <label><strong>Silt Level</strong></label>
+          <input type="text" class="form-control" name="main_silt" value="{{ log.main_silt }}">
+          
+          <label><strong>Comments</strong></label>
+          <textarea class="form-control" name="main_comments">{{ log.main_comments }}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button -->
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+    <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-secondary mt-3">Cancel</a>
+  </form>
+</div>
+{% endblock %}
+
+

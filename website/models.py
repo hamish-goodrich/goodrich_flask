@@ -51,6 +51,7 @@ class Monitoring_log(db.Model):
     floc_type = db.Column(db.String(40))
     author = db.Column(db.String(400))
     company = db.Column(db.String(400))
+    week_ending = db.Column(db.String(40))
 
 
 class User(db.Model, UserMixin):

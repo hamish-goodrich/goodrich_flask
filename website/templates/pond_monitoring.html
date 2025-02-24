@@ -1,65 +1,77 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-    %}
-    <h1 align="center">This Weeks Monitoring Logs:</h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Pond Name</th>
-          <th scope="col">Date </th>
-          <th scope="col">Time </th>
-          <th scope="col">Weather </th>
-          <th scope="col">Temp (c)</th>
-          <th scope="col">IBC Level (L)</th>
-          <th scope="col">FB pH  </th>
-          <th scope="col">FB Temp</th>
-          <th scope="col">FB NTU </th>
-          <th scope="col">MN pH  </th>
-          <th scope="col">MN Temp</th>
-          <th scope="col">MN NTU </th>
-          <th scope="col">Fl Flow</th>
-          <th scope="col">Fb Flow</th>
-          <th scope="col">Mn Flow</th>
-          <th scope="col">Dc Flow</th>
-          <th scope="col">Technician</th>
-        </tr>
-      </thead>
-      <tbody>
+{% extends "base.html" %}
+<head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pond_monitoring.css')}}" >
+</head>
+{% block title %}Home{% endblock %}
 
-          {% for log in logs %}
-            <tr>
-              <th scope="row">{{ loop.index }}</th>
-              <td>{{ log.pond_name }}</td>
-              <td>{{ log.date }}</td>
-              <td>{{ log.time }}</td>
-              <td>{{ log.weather }}</td>
-              <td>{{ log.temperature }}</td>
-              <td>{{ log.ibc_level }}</td>
-              <td>{{ log.forebay_ph }}</td>
-              <td>{{ log.forebay_temp }}</td>
-              <td>{{ log.forebay_ntu }}</td>
-              <td>{{ log.main_ph }}</td>
-              <td>{{ log.main_temp }}</td>
-              <td>{{ log.main_ntu }}</td>
-              <td>{{ log.flume_flow }}</td>
-              <td>{{ log.forebay_flow }}</td>
-              <td>{{ log.main_flow }}</td>
-              <td>{{ log.decant_flow }}</td>
-              <td>{{ log.author }}</td>
-              <td>
-                <form action="{{ url_for('views.delete_log') }}" method="POST" style="display:inline;">
-                  <input type="hidden" name="id" value="{{ log.id }}">
-                  <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
-                </form>
-              </td>
+{% block content %}
 
-            </tr>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar: Full height, scrollable -->
+    <nav class="d-none d-md-block vh-100 bg-light sidebar " style="position: fixed; align-items:normal; padding: 10px 10px 20px 10px; width:170px; margin-left: 180px; overflow-y: auto;">
+      <div class="position-sticky p-3">
+        <div class="nav">
+          {% for week in unique_weeks %}
+          <a href="{{ url_for('views.pond_monitoring', selected_week=week) }}" 
+             class="btn {% if week == selected_week %}btn-success{% else %}btn-outline-success{% endif %} mb-2">
+            {{ week }}
+          </a>
           {% endfor %}
-        
-      </tbody>
-    </table>
-    <div align="center">
-      <a href="{{ url_for('views.download_csv') }}" class="btn btn-success">Download CSV</a>
-    </div>
-    {% endblock %}
-    
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="main-pond-content">
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <h1><small class="text">Logs for Week Ending {{ selected_week }}</small></h1>
+        <a href="{{ url_for('views.download_csv') }}" class="btn btn-success">Download CSV</a>
+      </div>
+
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pond Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>IBC Level (L)</th>
+            <th>Forebay pH</th>
+            <th>Forebay NTU</th>
+            <th>Main pH</th>
+            <th>Main NTU</th>
+            <th>Technician</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs if log.week_ending == selected_week %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ log.pond_name }}</td>
+            <td>{{ log.date }}</td>
+            <td>{{ log.time }}</td>
+            <td>{{ log.ibc_level }}</td>
+            <td>{{ log.forebay_ph }}</td>
+            <td>{{ log.forebay_ntu }}</td>
+            <td>{{ log.main_ph }}</td>
+            <td>{{ log.main_ntu }}</td>
+            <td>{{ log.author }}</td>
+            <td>
+              <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
+              <a href="{{ url_for('views.edit_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
+              <form action="{{ url_for('views.delete_log') }}" method="POST" style="display:inline;">
+                <input type="hidden" name="id" value="{{ log.id }}">
+                <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+  </div>
+</div>
+{% endblock %}
