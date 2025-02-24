@@ -263,6 +263,7 @@ def upload_log():
 
         # # Extract date properly
         date = data.get("date")  # No comma
+        print(date)
         dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
         
         # # Calculate week ending correctly
@@ -322,4 +323,5 @@ def upload_log():
         return jsonify({"message": "Log added successfully"}), 201
 
     except Exception as e:
+        print(dt)
         return jsonify({"error": str(e)}), 400
