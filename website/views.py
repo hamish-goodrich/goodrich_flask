@@ -70,7 +70,7 @@ def edit_log(log_id):
 
         log.time        = request.form['time']
         log.weather     = request.form['weather']
-        log.temp        = request.form['temp']
+        log.temperature = request.form['temperature']
         log.ibc_level   = request.form['ibc_level']
         log.flume_flow  = 'flume_flow' in request.form  # True if checked, False otherwise
         log.forebay_flow = 'forebay_flow' in request.form  # True if checked, False otherwise
@@ -278,12 +278,13 @@ def upload_log():
         dt = datetime.strptime(date, '%d/%m/%Y').date(),
         start = dt - timedelta(days=dt.weekday()),
         end = start + timedelta(days=6),
+        week_ending = end.strftime('%d/%b/%Y'),
 
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
         pond_name=data.get("pond_name"),
         date=date,
-        week_ending = end.strftime('%d/%b/%Y'),
+        week_ending = week_ending,
         time=data.get("time"),
         weather=data.get("weather"),
         temperature=data.get("temperature"),

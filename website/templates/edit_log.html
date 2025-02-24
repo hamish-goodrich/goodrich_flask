@@ -28,7 +28,7 @@
           <input type="text" class="form-control" name="weather" value="{{ log.weather }}">
           
           <label><strong>Temperature (°C)</strong></label>
-          <input type="number" class="form-control" name="temp" value="{{ log.temp }}">
+          <input type="number" class="form-control" name="temperature" value="{{ log.temperature }}">
           
           <label><strong>IBC Level (L)</strong></label>
           <input type="number" class="form-control" name="ibc_level" value="{{ log.ibc_level }}">
@@ -37,13 +37,13 @@
           <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
 
           <label class="form-label"><strong>Forebay Flow:&nbsp;&nbsp;</strong></label>
-          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+          <input type="checkbox" name="forebay_flow" {% if log.forebay_flow %} checked {% endif %}><br/>
 
           <label class="form-label"><strong>Main Flow:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
-          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+          <input type="checkbox" name="main_flow" {% if log.main_flow %} checked {% endif %}><br/>
 
           <label class="form-label"><strong>Decant Flow:&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
-          <input type="checkbox" name="flume_flow" {% if log.flume_flow %} checked {% endif %}><br/>
+          <input type="checkbox" name="decant_flow" {% if log.decant_flow %} checked {% endif %}><br/>
 
         </div>
         <div class="col-md-6">

@@ -74,16 +74,25 @@
       </nav>
     </div>
   {% else %}
-    <div class="sidebar">
-      <div class="nav flex-column">
-        <a class="navbar-brand" href="/">
-          <img width="200px" height="60x"src="{{ url_for('static', filename='images/goodrich.png')}}">
-        </a>
-      </div>
-    </div>  
-    
-    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+  <div class="sidebar">
+    <nav class="nav flex-column">
+      <a class="navbar-brand" href="/">
+        <img width="180px" height="50x"src="{{ url_for('static', filename='images/goodrich.png')}}">
+      </a>
+      <a class="nav-link" id="login" href="/login">
+        <span class="icon">
+          <i class="bi bi-door-open-fill"></i>
+        </span>
+        <span class="description">Login</span>
+      </a>
+      <a class="nav-link" id="signUp" href="/sign-up">
+        <span class="icon">
+          <i class="bi bi-gear-fill"></i>
+        </span>
+        <span class="description">Sign Up</span>
+      </a>
+    </nav>
+  </div>
   {% endif %}
   <main class="main-content">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
