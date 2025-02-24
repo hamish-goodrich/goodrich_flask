@@ -262,14 +262,13 @@ def upload_log():
         data = request.get_json()  # Get JSON from Flutter
 
         # # Extract date properly
-        date = data.get("date")  # No comma
-        print(date)
-        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
+        date = data.get("date")  # No comm
+        dt = datetime.strptime(date, '%d-%m-%Y').date()  # Convert string to date
         
-        # # Calculate week ending correctly
-        # start = dt - timedelta(days=dt.weekday())  # Monday of the week
-        # end = start + timedelta(days=6)  # Sunday of the same week
-        # week_ending = end.strftime('%d/%b/%Y')  # Format correctly
+        # Calculate week ending correctly
+        start = dt - timedelta(days=dt.weekday())  # Monday of the week
+        end = start + timedelta(days=6)  # Sunday of the same week
+        week_ending = end.strftime('%d/%b/%Y')  # Format correctly
         
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
@@ -323,5 +322,4 @@ def upload_log():
         return jsonify({"message": "Log added successfully"}), 201
 
     except Exception as e:
-        print(dt)
         return jsonify({"error": str(e)}), 400
