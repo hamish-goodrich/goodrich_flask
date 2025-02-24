@@ -271,7 +271,7 @@ def download_csv():
 def upload_log():
     start = datetime
     end = datetime
-
+    return jsonify({"message": "Log added successfully"}), 201
     try:
         data = request.get_json()  # Get JSON from Flutter
         date=data.get("date"),
