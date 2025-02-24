@@ -273,8 +273,8 @@ def upload_log():
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
             pond_name=data.get("pond_name"),
-            date=dt,
-            week_ending="week_ending",  # Use corrected week ending
+            date=dt.strftime('%d/%m/%Y'),
+            week_ending=week_ending,  # Use corrected week ending
             time=data.get("time"),
             weather=data.get("weather"),
             temperature=data.get("temperature"),
