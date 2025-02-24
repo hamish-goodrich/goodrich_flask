@@ -51,7 +51,7 @@ def job_cards():
 @login_required
 def floc_units():
     logs = Monitoring_log.query.all()
-    return render_template("floc_units.html", logs=logs user=current_user)
+    return render_template("floc_units.html", logs=logs, user=current_user)
 
 @views.route("/view_log/<int:log_id>")
 def view_log(log_id):
