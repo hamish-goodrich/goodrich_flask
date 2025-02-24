@@ -119,18 +119,6 @@ def delete_log():
     db.session.commit()
     return redirect(url_for('views.pond_monitoring'))  # Redirect back to the home page
 
-
-@views.route('/delete-note', methods=['POST'])
-def delete_note():  
-    note = json.loads(request.data) # this function expects a JSON from the INDEX.js file 
-    noteId = note['noteId']
-    note = Note.query.get(noteId)
-    if note:
-        if note.user_id == current_user.id:
-            db.session.delete(note)
-            db.session.commit()
-    return jsonify({})
-
 @views.route('/createlog', methods=['GET', 'POST'])
 @login_required
 def createlog():
