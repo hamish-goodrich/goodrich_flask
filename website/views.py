@@ -50,7 +50,9 @@ def job_cards():
 @views.route('/floc_units', methods=['GET', 'POST'])
 @login_required
 def floc_units():
-    return render_template("floc_units.html", user=current_user)
+    logs = Monitoring_log.query.all()
+
+    return render_template("floc_units.html", user=current_user, logs=logs)
 
 @views.route("/view_log/<int:log_id>")
 def view_log(log_id):
