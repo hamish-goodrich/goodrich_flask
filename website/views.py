@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify, make_response
 from flask_login import login_required, current_user
 from .models import Service_request, Monitoring_log
 from . import db
@@ -6,19 +6,8 @@ import json
 import csv
 from io import StringIO
 from datetime import datetime, timedelta
-from flask_httpauth import HTTPBasicAuth
-from werkzeug.security import check_password_hash
-import pendulum
 
 views = Blueprint('views', __name__)
-httpauth = HTTPBasicAuth()
-
-# Define authentication function
-@httpauth.verify_password
-def verify_password(username, password):
-    user = current_user
-    if user and check_password_hash(user.password, password):
-        return user
     
 @views.route('/', methods=['GET', 'POST'])
 @login_required
@@ -267,7 +256,6 @@ def download_csv():
     )
 
 @views.route('/upload_log', methods=['POST'])
-@httpauth.login_required
 def upload_log():
     try:
         data = request.get_json()  # Get JSON from Flutter
