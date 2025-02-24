@@ -50,8 +50,7 @@ def job_cards():
 @views.route('/floc_units', methods=['GET', 'POST'])
 @login_required
 def floc_units():
-    logs = Monitoring_log.query.all()
-    return render_template("floc_units.html", logs=logs, user=current_user)
+    return render_template("floc_units.html", user=current_user)
 
 @views.route("/view_log/<int:log_id>")
 def view_log(log_id):
@@ -258,59 +257,63 @@ def download_csv():
 
 @views.route('/upload_log', methods=['POST'])
 def upload_log():
-    return render_template("createlog.html", user=current_user)
-    data = request.get_json()  # Get JSON from Flutter
     try:
+        data = request.get_json()  # Get JSON from Flutter
+
+        # Extract date properly
+        date = data.get("date")  # No comma
+        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
         
-        date=data.get("date"),
-        dt = datetime.strptime(date, '%d/%m/%Y').date(),
-        start = dt - timedelta(days=dt.weekday()),
-        end = start + timedelta(days=6),
-        week_ending = end.strftime('%d/%b/%Y'),
+        # Calculate week ending correctly
+        start = dt - timedelta(days=dt.weekday())  # Monday of the week
+        end = start + timedelta(days=6)  # Sunday of the same week
+        week_ending = end.strftime('%d/%b/%Y')  # Format correctly
+        
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
-        pond_name=data.get("pond_name"),
-        date=date,
-        week_ending = week_ending,
-        time=data.get("time"),
-        weather=data.get("weather"),
-        temperature=data.get("temperature"),
-        ibc_level=data.get("ibc_level"),
+            pond_name=data.get("pond_name"),
+            date=date,
+            week_ending=week_ending,  # Use corrected week ending
+            time=data.get("time"),
+            weather=data.get("weather"),
+            temperature=data.get("temperature"),
+            ibc_level=data.get("ibc_level"),
 
-        forebay_sample=data.get("forebay_sample"),
-        forebay_ph=data.get("forebay_ph"),
-        forebay_ntu=data.get("forebay_ntu"),
-        forebay_temp=data.get("forebay_temp"),
-        forebay_height=data.get("forebay_height"),
-        forebay_comments=data.get("forebay_comments"),
-        forebay_floc_dosed=data.get("forebay_floc_dosed"),
-        forebay_lime_dosed=data.get("forebay_lime_dosed"),
-        forebay_silt=data.get("forebay_silt"),
-        forebay_clear=data.get("forebay_clear"),
-        forebay_cloudy=data.get("forebay_cloudy"),
+            forebay_sample=data.get("forebay_sample"),
+            forebay_ph=data.get("forebay_ph"),
+            forebay_ntu=data.get("forebay_ntu"),
+            forebay_temp=data.get("forebay_temp"),
+            forebay_height=data.get("forebay_height"),
+            forebay_comments=data.get("forebay_comments"),
+            forebay_floc_dosed=data.get("forebay_floc_dosed"),
+            forebay_lime_dosed=data.get("forebay_lime_dosed"),
+            forebay_silt=data.get("forebay_silt"),
+            forebay_clear=data.get("forebay_clear"),
+            forebay_cloudy=data.get("forebay_cloudy"),
 
-        main_sample=data.get("main_sample"),
-        main_ph=data.get("main_ph"),
-        main_ntu=data.get("main_ntu"),
-        main_temp=data.get("main_temp"),
-        main_height=data.get("main_height"),
-        main_comments=data.get("main_comments"),
-        main_floc_dosed=data.get("main_floc_dosed"),
-        main_lime_dosed=data.get("main_lime_dosed"),
-        main_silt=data.get("main_silt"),
-        main_clear=data.get("main_clear"),
-        main_cloudy=data.get("main_cloudy"),
+            main_sample=data.get("main_sample"),
+            main_ph=data.get("main_ph"),
+            main_ntu=data.get("main_ntu"),
+            main_temp=data.get("main_temp"),
+            main_height=data.get("main_height"),
+            main_comments=data.get("main_comments"),
+            main_floc_dosed=data.get("main_floc_dosed"),
+            main_lime_dosed=data.get("main_lime_dosed"),
+            main_silt=data.get("main_silt"),
+            main_clear=data.get("main_clear"),
+            main_cloudy=data.get("main_cloudy"),
 
-        flume_flow=data.get("flume_flow"),
-        forebay_flow=data.get("forebay_flow"),
-        main_flow=data.get("main_flow"),
-        decant_flow=data.get("decant_flow"),
+            flume_flow=data.get("flume_flow"),
+            forebay_flow=data.get("forebay_flow"),
+            main_flow=data.get("main_flow"),
+            decant_flow=data.get("decant_flow"),
 
-        unit_type=data.get("unit_type"),
-        floc_type=data.get("floc_type"),
-        author=data.get("author"),
-        company=data.get("company"),
+            unit_type=data.get("unit_type"),
+            floc_type=data.get("floc_type"),
+            author=data.get("author"),
+            company=data.get("company"),
         )
+
         # Add to database
         db.session.add(new_log)
         db.session.commit()
