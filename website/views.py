@@ -257,9 +257,6 @@ def download_csv():
 
 @views.route('/upload_log', methods=['POST'])
 def upload_log():
-    start = datetime
-    end = datetime
-    return jsonify({"message": "Log added successfully"}), 201
     try:
         data = request.get_json()  # Get JSON from Flutter
         date=data.get("date"),
@@ -267,7 +264,8 @@ def upload_log():
         start = dt - timedelta(days=dt.weekday()),
         end = start + timedelta(days=6),
         week_ending = end.strftime('%d/%b/%Y'),
-
+        print("creating new log")
+        print(data)
         # Create a new Monitoring_log entry
         new_log = Monitoring_log(
         pond_name=data.get("pond_name"),
