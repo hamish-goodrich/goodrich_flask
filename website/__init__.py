@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
 import os
+from flask_migrate import Migrate
+migrate = Migrate()
 
 db = SQLAlchemy()
 # DB_NAME = "database.db"
@@ -11,9 +13,10 @@ db = SQLAlchemy()
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://admin:yourpassword@flask-db.cbegoya88q7x.us-west-2.rds.amazonaws.com:5432/postgres')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     from .views import views
     from .auth import auth
