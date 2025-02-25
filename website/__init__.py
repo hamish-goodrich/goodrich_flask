@@ -2,17 +2,17 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
+import os
 
 db = SQLAlchemy()
-DB_NAME = "database.db"
+# DB_NAME = "database.db"
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+    app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://admin:yourpassword@flask-db.cbegoya88q7x.us-west-2.rds.amazonaws.com:5432/postgres')
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'arn:aws:rds:us-west-2:586794443730:db:flask-database'
     db.init_app(app)
 
     from .views import views
@@ -21,10 +21,10 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
-    from .models import User, Service_request, Monitoring_log
+    from .models import User, Service_request, Monitoring_log, Units, Ponds, Stocktake, Soil_testing
     
-    # with app.app_context():
-    #     db.create_all()
+    with app.app_context():
+        db.create_all()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
