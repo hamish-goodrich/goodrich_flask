@@ -43,6 +43,8 @@ class Soil_testing(db.Model):
     image10url = db.Column(db.String(200))
     image30url = db.Column(db.String(200))
     image60url = db.Column(db.String(200))
+
+    dose_rate = db.Column(db.String(200))
     
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='soil_tests')
@@ -111,6 +113,7 @@ class Monitoring_log(db.Model):
     company = db.Column(db.String(400))
     week_ending = db.Column(db.String(40))
 
+    image_url = db.Column(db.String(500))
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='monitoring_logs')
 
@@ -138,6 +141,7 @@ class Ponds(db.Model):
     location = db.Column(db.Integer)
     estimated_duration = db.Column(db.Integer)
     monitoring_frequency=(db.String(400))
+    image_url = db.Column(db.String(500))
 
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='ponds')
@@ -153,5 +157,6 @@ class Units(db.Model):
     rut_carrier = db.Column(db.String(40))
     rut_sim = db.Column(db.String(50))
     rut_phone = db.Column(db.String(40))
+    image_url = db.Column(db.String(500))
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='units')
