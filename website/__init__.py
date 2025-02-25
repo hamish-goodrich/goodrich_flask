@@ -12,7 +12,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'flask-database.cbegoya88q7x.us-west-2.rds.amazonaws.com'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'arn:aws:rds:us-west-2:586794443730:db:flask-database'
     db.init_app(app)
 
     from .views import views
