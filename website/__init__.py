@@ -12,7 +12,7 @@ def create_app():
     app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-    app.config['POSTGRES_DATABASE_URI'] = 'flask-database.cbegoya88q7x.us-west-2.rds.amazonaws.com'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'flask-database.cbegoya88q7x.us-west-2.rds.amazonaws.com'
     db.init_app(app)
 
     from .views import views
