@@ -23,8 +23,8 @@ def create_app():
 
     from .models import User, Service_request, Monitoring_log, Units, Ponds, Stocktake, Soil_testing
     
-    with app.app_context():
-        db.create_all()
+    # with app.app_context():
+    #     db.create_all()
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -37,8 +37,8 @@ def create_app():
     return app
 
 
-def create_database(app):
-    if not path.exists('website/' + DB_NAME):
-        db.create_all(app=app)
+# def create_database(app):
+#     if not path.exists('website/' + DB_NAME):
+#         db.create_all(app=app)
 
-        print('Created Database!')
+#         print('Created Database!')
