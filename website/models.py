@@ -151,7 +151,7 @@ class Units(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     unit = db.Column(db.String(400))
     unit_type = db.Column(db.String(400))
-    modem_id = (db.String(40))
+    modem_id = db.Column((db.String(40)))
     rut_sn = db.Column(db.String(40))
     rut_MAC = db.Column(db.String(40))
     rut_carrier = db.Column(db.String(40))

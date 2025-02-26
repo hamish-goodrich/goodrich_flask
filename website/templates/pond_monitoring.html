@@ -14,7 +14,7 @@
       <div class="position-sticky p-3">
         <div class="nav">
           {% for week in unique_weeks %}
-          <a href="{{ url_for('views.pond_monitoring', selected_week=week) }}" 
+          <a href="{{ url_for('pond_view.pond_monitoring', selected_week=week) }}" 
              class="btn {% if week == selected_week %}btn-success{% else %}btn-outline-success{% endif %} mb-2">
             {{ week }}
           </a>
@@ -28,9 +28,9 @@
       <div class="d-flex justify-content-between align-items-center mt-3">
         <h1><small class="text">Logs for Week Ending {{ selected_week }}</small></h1>
         <div>
-          <a href="{{ url_for('views.createlog') }}" class="btn btn-outline-success">  ADD  </a>
-          <a href="{{ url_for('views.download_csv') }}" class="btn btn-outline-success">EXPORT WORD</a>
-          <a href="{{ url_for('views.download_csv') }}" class="btn btn-outline-success">EXPORT CSV</a>
+          <a href="{{ url_for('pond_view.createlog') }}" class="btn btn-outline-success">  ADD  </a>
+          <a href="{{ url_for('pond_view.download_csv') }}" class="btn btn-outline-success">EXPORT WORD</a>
+          <a href="{{ url_for('pond_view.download_csv') }}" class="btn btn-outline-success">EXPORT CSV</a>
         </div>
       </div>
 
@@ -64,9 +64,9 @@
             <td>{{ log.main_ntu }}</td>
             <td>{{ log.author }}</td>
             <td>
-              <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
-              <a href="{{ url_for('views.edit_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
-              <form action="{{ url_for('views.delete_log') }}" method="POST" style="display:inline;">
+              <a href="{{ url_for('pond_view.view_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
+              <a href="{{ url_for('pond_view.edit_log', log_id=log.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
+              <form action="{{ url_for('pond_view.delete_log') }}" method="POST" style="display:inline;">
                 <input type="hidden" name="id" value="{{ log.id }}">
                 <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
               </form>

@@ -5,13 +5,13 @@
 {% block content %}
 <div class="container mt-4">
   <!-- Back Button -->
-  <a href="{{ url_for('views.pond_monitoring') }}" class="btn btn-outline-secondary mb-3">&larr; Back to Logs</a>
+  <a href="{{ url_for('pond_view.pond_monitoring') }}" class="btn btn-outline-secondary mb-3">&larr; Back to Logs</a>
 
   <!-- Edit Log Button -->
-  <a href="{{ url_for('views.edit_log', log_id=log.id) }}" class="btn btn-outline-success mb-3">Edit Log</a>
+  <a href="{{ url_for('pond_view.edit_log', log_id=log.id) }}" class="btn btn-outline-success mb-3">Edit Log</a>
 
   <!-- Edit Log Button -->
-  <a href="{{ url_for('views.delete_log', log_id=log.id) }}" class="btn btn-outline-danger mb-3">Delete log</a>
+  <a href="{{ url_for('pond_view.delete_log', log_id=log.id) }}" class="btn btn-outline-danger mb-3">Delete log</a>
 
   <!-- Admin Details Card -->
   <div class="card shadow-lg mb-4">

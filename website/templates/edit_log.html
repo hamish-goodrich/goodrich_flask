@@ -5,9 +5,9 @@
 {% block content %}
 <div class="container mt-4">
   <!-- Back Button -->
-  <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-outline-secondary mb-3">&larr; Back to Log</a>
+  <a href="{{ url_for('pond_view.view_log', log_id=log.id) }}" class="btn btn-outline-secondary mb-3">&larr; Back to Log</a>
 
-  <form action="{{ url_for('views.edit_log', log_id=log.id) }}" method="POST">
+  <form action="{{ url_for('pond_view.edit_log', log_id=log.id) }}" method="POST">
     <!-- Admin Details Card -->
     <div class="card shadow-lg mb-4">
       <div class="card-header bg-success text-white">
@@ -140,7 +140,7 @@
 
     <!-- Save Button -->
     <button type="submit" class="btn btn-success mt-3">Save</button>
-    <a href="{{ url_for('views.view_log', log_id=log.id) }}" class="btn btn-secondary mt-3">Cancel</a>
+    <a href="{{ url_for('pond_view.view_log', log_id=log.id) }}" class="btn btn-secondary mt-3">Cancel</a>
   </form>
 </div>
 {% endblock %}

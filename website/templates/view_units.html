@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Units{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <h1><small class="text">Full Fleet of Units</small></h1>
+    <div>
+        <a href="{{ url_for('unit_view.add_unit') }}" class="btn btn-outline-success">ADD UNIT</a>
+        <a href="" class="btn btn-outline-success">EXPORT CSV</a>
+    </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Unit</th>
+            <th>Type</th>
+            <th>Modem ID</th>
+            <th>RUT SN</th>
+            <th>RUT MAC</th>
+            <th>Carrier</th>
+            <th>SIM</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for unit in units %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ unit.unit }}</td>
+            <td>{{ unit.unit_type }}</td>
+            <td>{{ unit.modem_id }}</td>
+            <td>{{ unit.rut_sn }}</td>
+            <td>{{ unit.rut_MAC }}</td>
+            <td>{{ unit.rut_carrier }}</td>
+            <td>{{ unit.rut_sim }}</td>
+            <td>{{ unit.rut_phone }}</td>
+            <td>
+                {{ unit.id }}
+                <a href="" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
+                <a href="{{ url_for('unit_view.edit_unit', unit_id = unit.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
+                <form action="{{ url_for('unit_view.delete_unit') }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="id" value="{{ unit.id }}">
+                    <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

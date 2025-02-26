@@ -7,21 +7,32 @@ from flask_migrate import Migrate
 migrate = Migrate()
 
 db = SQLAlchemy()
-# DB_NAME = "database.db"
+DB_NAME = "database.db"
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
+    app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
+    # app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
+    # app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 
     db.init_app(app)
     migrate.init_app(app, db)
 
     from .views import views
+    from .pond_view import pond_view
+    from .unit_view import unit_view
+    from .job_view import job_view
     from .auth import auth
 
+
     app.register_blueprint(views, url_prefix='/')
+    app.register_blueprint(pond_view, url_prefix='/')
+    app.register_blueprint(unit_view, url_prefix='/')
+    app.register_blueprint(job_view, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
     from .models import User, Service_request, Monitoring_log, Units, Ponds, Stocktake, Soil_testing
