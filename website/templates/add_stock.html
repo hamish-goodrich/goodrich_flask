@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block title %}Create stock item{% endblock %} {% block
+    content %}
+    
+    <div class="container mt-4">
+        <form action="{{ url_for('stock_view.add_stock') }}" method="POST">
+            <!-- Admin Details Card -->
+            <div class="card shadow-lg">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">New Stock Item Details</h3>
+                </div>
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <label><strong>Item:</strong></label>
+                        <input type="text" class="form-control" name="item" required>
+                        <label><strong>Quantity In Stock:</strong></label>
+                        <input type="text" class="form-control" name="instock" required>
+                        <label><strong>Quantity On Order:</strong></label>
+                        <input type="text" class="form-control" name="onorder">
+                        <label><strong>Reorder Level:</strong></label>
+                        <input type="text" class="form-control" name="reorder_level">
+                        <label><strong>Estimated Price:</strong></label>
+                        <input type="text" class="form-control" name="last_unit_price">
+                        <label><strong>Supplier:</strong></label>
+                        <input type="text" class="form-control" name="supplier">
+                        <label><strong>Link:</strong></label>
+                        <input type="text" class="form-control" name="link">
+                        <label><strong>Last Date Updated:</strong></label>
+                        <input type="text" class="form-control" name="date">
+                    </div>
+                </div>
+                <!-- Save Button -->
+            </div>
+            <button type="submit" class="btn btn-success mt-3" >Save Unit</button>
+            <a href="{{ url_for('stock_view.view_stock') }}" class="btn btn-secondary mt-3">Cancel</a>
+
+        </form>
+    </div>
+{% endblock %}            

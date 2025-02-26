@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Stock{% endblock %}
+
+{% block content %}
+<!-- Main content -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <h1><small class="text">Full Stock List</small></h1>
+    <div>
+        <a href="{{ url_for('stock_view.add_stock') }}" class="btn btn-outline-success">ADD ITEM</a>
+        <a href="" class="btn btn-outline-success">EXPORT CSV</a>
+    </div>
+    </div>
+
+    <table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Item</th>
+            <th>In Stock</th>
+            <th>On Order</th>
+            <th>Reorder Level</th>
+            <th>Price</th>
+            <th>Supplier</th>
+            <th>Link</th>
+            <th>Last Updated</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stock in all_stock %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ stock.item }}</td>
+            <td>{{ stock.instock }}</td>
+            <td>{{ stock.onorder }}</td>
+            <td>{{ stock.reorder_level }}</td>
+            <td>{{ stock.last_unit_price }}</td>
+            <td>{{ stock.supplier }}</td>
+            <td>{{ stock.link }}</td>
+            <td>{{ stock.date }}</td>
+            <td>
+                <a href="" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
+                <a href="{{ url_for('stock_view.edit_stock', unit_id = unit.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
+                <form action="{{ url_for('stock_view.delete_stock') }}" method="POST" style="display:inline;">
+                    <input type="hidden" name="id" value="{{ stock.id }}">
+                    <button type="submit" class="btn btn-danger btn-sm">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

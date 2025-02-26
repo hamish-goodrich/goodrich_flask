@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Unit{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <!-- Back Button -->
+  <a href="{{ url_for('stock_view.view_stock', stock_id=stock.id) }}" class="btn btn-outline-secondary mb-3">&larr; Back to Units</a>
+
+  <form action="{{ url_for('stock_view.edit_stock', stock_id=stock.id) }}" method="POST">
+    <!-- Admin Details Card -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0">Edit Unit Details</h3>
+        </div>
+        <div class="card-body row">
+            <div class="col-md-6">
+              <label><strong>Item:</strong></label>
+              <input type="text" class="form-control" name="item" required value="{{ stock.item }}">
+              <label><strong>Quantity In Stock:</strong></label>
+              <input type="text" class="form-control" name="instock" required value="{{ stock.instock }}">
+              <label><strong>Quantity On Order:</strong></label>
+              <input type="text" class="form-control" name="onorder" value="{{ stock.onorder }}">
+              <label><strong>Reorder Level:</strong></label>
+              <input type="text" class="form-control" name="reorder_level" value="{{ stock.reorder_level }}">
+              <label><strong>Estimated Price:</strong></label>
+              <input type="text" class="form-control" name="last_unit_price" value="{{ stock.last_unit_price }}">
+              <label><strong>Supplier:</strong></label>
+              <input type="text" class="form-control" name="supplier" value="{{ stock.supplier }}">
+              <label><strong>Link:</strong></label>
+              <input type="text" class="form-control" name="link" value="{{ stock.link }}">
+              <label><strong>Last Date Updated:</strong></label>
+              <input type="text" class="form-control" name="date" value="{{ stock.date }}">
+            </div>
+        </div>
+        <!-- Save Button -->
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Save</button>
+    <a href="{{ url_for('stock_view.view_stock') }}" class="btn btn-secondary mt-3">Cancel</a>
+  </form>
+</div>
+{% endblock %}
