@@ -16,7 +16,7 @@ def dashboard():
     # all_ponds
     # all_job_cards = 
     # all_users
-    return render_template("dashboard.html", all_users=all_users, user=current_user)
+    return render_template("dashboard.html", user=current_user)
 
 @views.route('/bench_testing', methods=['GET', 'POST'])
 @login_required
