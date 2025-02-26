@@ -35,7 +35,7 @@ def add_stock():
             last_unit_price = last_unit_price,
             supplier = supplier,
             link = link,
-            date = date,
+            # date = date,
         )
 
         db.session.add(new_stock)
@@ -45,8 +45,8 @@ def add_stock():
     return render_template('add_stock.html', user=current_user)
 
 @stock_view.route('/edit_stock/<int:stock_id>', methods=['GET', 'POST'])
-def edit_unit(stock_id):
-    stock = Units.query.get_or_404(stock_id)
+def edit_stock(stock_id):
+    stock = Stocktake.query.get_or_404(stock_id)
 
     if request.method == 'POST':
         stock.item = request.form.get('item')

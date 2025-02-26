@@ -40,7 +40,7 @@
             <td>{{ stock.date }}</td>
             <td>
                 <a href="" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
-                <a href="{{ url_for('stock_view.edit_stock', unit_id = unit.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
+                <a href="{{ url_for('stock_view.edit_stock', stock_id = stock.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
                 <form action="{{ url_for('stock_view.delete_stock') }}" method="POST" style="display:inline;">
                     <input type="hidden" name="id" value="{{ stock.id }}">
                     <button type="submit" class="btn btn-danger btn-sm">DELETE</button>

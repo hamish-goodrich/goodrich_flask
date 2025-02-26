@@ -29,8 +29,14 @@ def edit_log(log_id):
     log = Monitoring_log.query.get_or_404(log_id)
 
     if request.method == 'POST':
-        log.date = request.form['date']
-        dt = datetime.strptime(log.date, '%d/%m/%Y').date()
+        date = request.form['date']
+        try:
+            log.date = date
+            dt = datetime.strptime(log.date, '%d/%m/%Y').date()
+            print("Good Date")
+        except:
+            log.date = "01/01/2001"
+            dt = datetime.strptime(log.date, '%d/%m/%Y').date()
         start = dt - timedelta(days=dt.weekday())
         end = start + timedelta(days=6)
         log.week_ending = end.strftime('%d/%b/%Y')
@@ -91,8 +97,13 @@ def delete_log():
 def createlog():
     if request.method == 'POST':
         pond_name    = request.form.get('pond_name')
-        date    = request.form.get('date')
-        dt = datetime.strptime(date, '%d/%m/%Y').date()
+        try:
+            date = request.form.get('date')
+            dt = datetime.strptime(date, '%d/%m/%Y').date()
+            print("Good Date")
+        except:
+            date = "01/01/2001"
+            dt = datetime.strptime(date, '%d/%m/%Y').date()
         start = dt - timedelta(days=dt.weekday())
         end = start + timedelta(days=6)
         week_ending = end.strftime('%d/%b/%Y')
