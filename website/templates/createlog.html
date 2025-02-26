@@ -2,7 +2,7 @@
 content %}
 
 <div class="container mt-4">
-  <form action="{{ url_for('views.createlog') }}" method="POST">
+  <form action="{{ url_for('pond_view.createlog') }}" method="POST">
     <!-- Admin Details Card -->
     <div class="card shadow-lg mb-4">
       <div class="card-header bg-success text-white">
@@ -135,7 +135,7 @@ content %}
 
     <!-- Save Button -->
     <button type="submit" class="btn btn-success mt-3">Save</button>
-    <a href="{{ url_for('views.pond_monitoring') }}" class="btn btn-secondary mt-3">Cancel</a>
+    <a href="{{ url_for('pond_view.pond_monitoring') }}" class="btn btn-secondary mt-3">Cancel</a>
   </form>
 </div>
 {% endblock %}

@@ -23,6 +23,7 @@
             <th>Carrier</th>
             <th>SIM</th>
             <th>Phone</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -38,7 +39,6 @@
             <td>{{ unit.rut_sim }}</td>
             <td>{{ unit.rut_phone }}</td>
             <td>
-                {{ unit.id }}
                 <a href="" class="btn btn-outline-success btn-sm">&nbsp;VIEW&nbsp;</a>
                 <a href="{{ url_for('unit_view.edit_unit', unit_id = unit.id) }}" class="btn btn-outline-success btn-sm">&nbsp;&nbsp;EDIT&nbsp;&nbsp;</a>
                 <form action="{{ url_for('unit_view.delete_unit') }}" method="POST" style="display:inline;">

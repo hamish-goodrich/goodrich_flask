@@ -94,7 +94,7 @@
     </nav>
   </div>
   {% endif %}
-  <main class="main-content">
+  <main class="main-content bg-light">
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
       messages %} {% for category, message in messages %} {% if category ==
       'error' %}
@@ -113,7 +113,7 @@
       </div>
       {% endif %} {% endfor %} {% endif %} {% endwith %}
     
-      <div class="container-fluid">
+      <div class="container-fluid bg-light" style="height:100vh">
         {% block content %} 
         {% endblock %}
       </div>

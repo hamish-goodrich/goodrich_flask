@@ -11,7 +11,8 @@ assignments = db.Table('assignments',
     db.Column('soil_test_id', db.Integer, db.ForeignKey('soil_testing.id')),
     db.Column('monitoring_log_id', db.Integer, db.ForeignKey('monitoring_log.id')),
     db.Column('stocktake_id', db.Integer, db.ForeignKey('stocktake.id')),
-    db.Column('service_request_id', db.Integer, db.ForeignKey('service_request.id'))
+    db.Column('service_request_id', db.Integer, db.ForeignKey('service_request.id')),
+    db.Column('job_card_id', db.Integer, db.ForeignKey('job_cards.id')),
 )
 
 # Soil Testing Model
@@ -160,3 +161,19 @@ class Units(db.Model):
     image_url = db.Column(db.String(500))
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='units')
+
+# Units Model
+class Job_cards(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    pond_name = db.Column(db.String(400))
+    unit = db.Column(db.String(400))
+    unit_type = db.Column(db.String(400))
+    date = db.Column(db.String(50))
+    author = db.Column(db.String(400))
+    company = db.Column(db.String(400))
+    in_out = db.Column(db.String(50))
+    comments = db.Column(db.String(500))
+    unit_type = db.Column(db.String(40))
+    floc_type = db.Column(db.String(40))
+    # Many-to-Many Relationship
+    assignments = db.relationship('User', secondary=assignments, backref='job_cards')
