@@ -86,21 +86,29 @@ class Monitoring_log(db.Model):
     temperature = db.Column(db.String(40))
     ibc_level = db.Column(db.Integer)
     
-    # Forebay Data
     forebay_sample = db.Column(db.Boolean)
     forebay_ph = db.Column(db.Float)
     forebay_ntu = db.Column(db.Float)
+    forebay_temp = db.Column(db.Integer)
     forebay_height = db.Column(db.Integer)
     forebay_comments = db.Column(db.String(400))
+    forebay_floc_dosed = db.Column(db.Integer)
+    forebay_lime_dosed = db.Column(db.Integer)
+    forebay_silt = db.Column(db.Integer)
     forebay_clear = db.Column(db.Boolean)
+    forebay_cloudy = db.Column(db.Boolean)
 
-    # Main Pond Data
     main_sample = db.Column(db.Boolean)
     main_ph = db.Column(db.Float)
     main_ntu = db.Column(db.Float)
+    main_temp = db.Column(db.Integer)
     main_height = db.Column(db.Integer)
     main_comments = db.Column(db.String(400))
+    main_floc_dosed = db.Column(db.Integer)
+    main_lime_dosed = db.Column(db.Integer)
+    main_silt = db.Column(db.Integer)
     main_clear = db.Column(db.Boolean)
+    main_cloudy = db.Column(db.Boolean)
 
     # Flow Data
     flume_flow = db.Column(db.Boolean)

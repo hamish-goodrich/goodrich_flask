@@ -248,7 +248,7 @@ def upload_log():
             forebay_sample=data.get("forebay_sample"),
             forebay_ph=data.get("forebay_ph"),
             forebay_ntu=data.get("forebay_ntu"),
-            # forebay_temp=data.get("forebay_temp"),
+            forebay_temp=data.get("forebay_temp"),
             forebay_height=data.get("forebay_height"),
             forebay_comments=data.get("forebay_comments"),
             forebay_floc_dosed=data.get("forebay_floc_dosed"),
