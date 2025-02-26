@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for, Response, jsonify, make_response
 from flask_login import login_required, current_user
-from .models import Service_request, Monitoring_log, Units
+from .models import User, Service_request, Monitoring_log, Units, Ponds, Stocktake, Soil_testing, Job_cards
 from . import db
 import json
 import csv
@@ -12,11 +12,12 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    # all_users
-    # all_ponds
-    # all_job_cards = 
-    # all_users
-    return render_template("dashboard.html", user=current_user)
+    all_users = User.query.all()
+    all_ponds = Ponds.query.all()
+    all_job_cards = Job_cards.query.all()
+    all_units = Units.query.all()
+
+    return render_template("dashboard.html", user=current_user, all_units=all_units, all_job_cards=all_job_cards, all_ponds=all_ponds, all_users=all_users)
 
 @views.route('/bench_testing', methods=['GET', 'POST'])
 @login_required
@@ -28,13 +29,7 @@ def bench_testing():
 def service_requests():
     return render_template("service_requests.html", user=current_user)
 
-@views.route('/stock_take', methods=['GET', 'POST'])
-@login_required
-def stock_take():
-    return render_template("stock_take.html", user=current_user)
 
-@views.route('/job_cards', methods=['GET', 'POST'])
-@login_required
-def job_cards():
-    return render_template("job_cards.html", user=current_user)
+
+
 

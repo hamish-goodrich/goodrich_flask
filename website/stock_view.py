@@ -7,9 +7,9 @@ import csv
 from io import StringIO
 from datetime import datetime, timedelta
 
-job_view = Blueprint('job_view', __name__)
+stock_view = Blueprint('stock_view', __name__)
 
-@job_view.route('/job_cards', methods=['GET', 'POST'])
+@stock_view.route('/stock_view', methods=['GET', 'POST'])
 @login_required
-def job_cards():
-    return render_template("job_cards.html", user=current_user)
+def stock_take():
+    return render_template("stock_view.html", user=current_user)
