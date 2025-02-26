@@ -224,12 +224,11 @@ def download_csv():
 @pond_view.route('/upload_log', methods=['POST'])
 def upload_log():
     try:
-        flash('Log added', category='success')
         data = request.get_json()  # Get JSON from Flutter
 
         # # Extract date properly
         date = data.get("date")  # No comm
-        dt = datetime.strptime(date, '%d-%m-%Y').date()  # Convert string to date
+        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
         
         # Calculate week ending correctly
         start = dt - timedelta(days=dt.weekday())  # Monday of the week
@@ -288,6 +287,7 @@ def upload_log():
         return jsonify({"message": "Log added successfully"}), 201
 
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 400
 
 @pond_view.route('/view_pond', methods=['GET', 'POST'])
