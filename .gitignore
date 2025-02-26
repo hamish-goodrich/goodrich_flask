@@ -4,3 +4,4 @@ website/__pycache__
 website/database.db
 instance/*
 __pycache__
+migrations/*
