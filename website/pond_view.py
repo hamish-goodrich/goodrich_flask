@@ -228,7 +228,7 @@ def upload_log():
 
         # # Extract date properly
         date = data.get("date")  # No comm
-        dt = datetime.strptime(date, '%d/%m/%Y').date()  # Convert string to date
+        dt = datetime.strptime(date, '%d-%m-%Y').date()  # Convert string to date
         
         # Calculate week ending correctly
         start = dt - timedelta(days=dt.weekday())  # Monday of the week
