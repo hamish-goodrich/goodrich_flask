@@ -166,6 +166,8 @@ class Units(db.Model):
     rut_carrier = db.Column(db.String(40))
     rut_sim = db.Column(db.String(50))
     rut_phone = db.Column(db.String(40))
+    last_serviced = db.Column(db.String(40))
+    issue_list = db.Column(db.String(500))
     image_url = db.Column(db.String(500))
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='units')
