@@ -2,18 +2,7 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-# Association Table for Many-to-Many Relationships
-assignments = db.Table('assignments',
-    db.Column('id', db.Integer, primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('unit_id', db.Integer, db.ForeignKey('units.id')),
-    db.Column('pond_id', db.Integer, db.ForeignKey('ponds.id')),
-    db.Column('soil_test_id', db.Integer, db.ForeignKey('soil_testing.id')),
-    db.Column('monitoring_log_id', db.Integer, db.ForeignKey('monitoring_log.id')),
-    db.Column('stocktake_id', db.Integer, db.ForeignKey('stocktake.id')),
-    db.Column('service_request_id', db.Integer, db.ForeignKey('service_request.id')),
-    db.Column('job_card_id', db.Integer, db.ForeignKey('job_cards.id')),
-)
+
 
 # Soil Testing Model
 class Soil_testing(db.Model):
@@ -187,3 +176,16 @@ class Job_cards(db.Model):
     floc_type = db.Column(db.String(40))
     # Many-to-Many Relationship
     assignments = db.relationship('User', secondary=assignments, backref='job_cards')
+    
+# Association Table for Many-to-Many Relationships
+assignments = db.Table('assignments',
+    db.Column('id', db.Integer, primary_key=True),
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('unit_id', db.Integer, db.ForeignKey('units.id')),
+    db.Column('pond_id', db.Integer, db.ForeignKey('ponds.id')),
+    db.Column('soil_test_id', db.Integer, db.ForeignKey('soil_testing.id')),
+    db.Column('monitoring_log_id', db.Integer, db.ForeignKey('monitoring_log.id')),
+    db.Column('stocktake_id', db.Integer, db.ForeignKey('stocktake.id')),
+    db.Column('service_request_id', db.Integer, db.ForeignKey('service_request.id')),
+    db.Column('job_card_id', db.Integer, db.ForeignKey('job_cards.id')),
+)
