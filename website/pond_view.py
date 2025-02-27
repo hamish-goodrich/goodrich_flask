@@ -271,7 +271,7 @@ def upload_log():
             main_sample=data.get("main_sample"),
             main_ph=data.get("main_ph"),
             main_ntu=data.get("main_ntu"),
-            # main_temp=data.get("main_temp"),
+            main_temp=data.get("main_temp"),
             main_height=data.get("main_height"),
             main_comments=data.get("main_comments"),
             main_floc_dosed=data.get("main_floc_dosed"),

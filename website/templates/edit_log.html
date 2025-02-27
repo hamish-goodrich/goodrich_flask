@@ -143,6 +143,18 @@
     <a href="{{ url_for('pond_view.view_log', log_id=log.id) }}" class="btn btn-secondary mt-3">Cancel</a>
   </form>
 </div>
+
+<script>
+  document.getElementById("logForm").addEventListener("submit", function(event) {
+    let inputs = this.querySelectorAll("input[type='number'], input[type='text'], textarea");
+    inputs.forEach(input => {
+      if (input.value.trim() === "") {
+        input.value = 0.0;
+      }
+    });
+  });
+</script>
+
 {% endblock %}
 
 
