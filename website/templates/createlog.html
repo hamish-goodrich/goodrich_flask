@@ -108,7 +108,7 @@
     let inputs = this.querySelectorAll("input[type='number'], input[type='text'], textarea");
     inputs.forEach(input => {
       if (input.value.trim() === "") {
-        input.value = "Null";
+        input.value = 0.0;
       }
     });
   });

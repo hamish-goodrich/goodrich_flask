@@ -6,6 +6,7 @@ import json
 import csv
 from io import StringIO
 from datetime import datetime, timedelta
+from sqlalchemy.inspection import inspect
 
 unit_view = Blueprint('unit_view', __name__)
 
@@ -74,3 +75,32 @@ def delete_unit():
     db.session.delete(unit_entry)
     db.session.commit()
     return redirect(url_for('unit_view.view_units'))  # Redirect back to the home page
+
+@unit_view.route('/export')
+def export():
+    units = Units.query.all()
+
+    # Create an in-memory file
+    output = StringIO()
+    writer = csv.writer(output)
+
+    # Get column names dynamically
+    columns = [column.key for column in inspect(Units).columns]
+
+    # Write headers
+    writer.writerow(columns)
+
+    # Write data rows
+    for unit in units:
+        writer.writerow([
+            getattr(unit, column) if getattr(unit, column) is not None else "0"
+            for column in columns
+        ])
+
+    output.seek(0)
+
+    return Response(
+        output, 
+        mimetype="text/csv",
+        headers={"Content-Disposition": "attachment; filename=unit_export.csv"}
+    )

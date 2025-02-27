@@ -25,8 +25,7 @@ def add_stock():
         last_unit_price = request.form.get('last_unit_price')
         supplier = request.form.get('supplier')
         link = request.form.get('link')
-        date = request.form.get('date')
-
+        
         new_stock = Stocktake(
             item = item,
             instock = instock,
@@ -56,7 +55,7 @@ def edit_stock(stock_id):
         stock.last_unit_price = request.form.get('last_unit_price')
         stock.supplier = request.form.get('supplier')
         stock.link = request.form.get('link')
-        stock.date = request.form.get('date')
+        stock.date = datetime.now()
         db.session.commit()
         return redirect(url_for('stock_view.view_stock', stock_id=stock.id, user=current_user))
 
