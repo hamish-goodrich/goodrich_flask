@@ -16,8 +16,8 @@ def create_app():
     # app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
     # app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
 
-    app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'your-secret-key')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+    app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', "GoodRich Secret Key")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', "postgresql://master:GoodRich#1@monitoring-db.c80ckkocjvpe.us-west-2.rds.amazonaws.com:5432/postgres")
 
     db.init_app(app)
     migrate.init_app(app, db)
