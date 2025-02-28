@@ -38,7 +38,9 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     from .models import User, Service_request, Monitoring_log, Units, Ponds, Stocktake, Soil_testing, Job_cards
-    
+    from werkzeug.middleware.proxy_fix import ProxyFix
+
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
     with app.app_context():
         db.create_all()
 

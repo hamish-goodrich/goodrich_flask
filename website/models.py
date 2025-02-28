@@ -168,3 +168,4 @@ class Job_cards(db.Model):
     comments = db.Column(db.String(500))
     unit_type = db.Column(db.String(40))
     floc_type = db.Column(db.String(40))
+
