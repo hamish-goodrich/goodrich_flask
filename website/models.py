@@ -1,9 +1,19 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
+# Generalized Many-to-Many Association Table
+class Assignment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    assigned_id = db.Column(db.Integer, nullable=False)  # ID of the assigned item
+    assigned_type = db.Column(db.String(50), nullable=False)  # Model name of the assigned item
+    owner_id = db.Column(db.Integer, nullable=False)  # ID of the owner item
+    owner_type = db.Column(db.String(50), nullable=False)  # Model name of the owner item
 
-
+    def __repr__(self):
+        return f'<Assignment {self.owner_type}({self.owner_id}) -> {self.assigned_type}({self.assigned_id})>'
+    
 # Soil Testing Model
 class Soil_testing(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,8 +46,6 @@ class Soil_testing(db.Model):
 
     dose_rate = db.Column(db.String(200))
     
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='soil_tests')
 
 # Stocktake Model
 class Stocktake(db.Model):
@@ -51,9 +59,6 @@ class Stocktake(db.Model):
     link = db.Column(db.String(200))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
 
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='stocktakes')
-
 # Service Request Model
 class Service_request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -61,9 +66,6 @@ class Service_request(db.Model):
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     open = db.Column(db.Boolean)
     urgency = db.Column(db.String(200))
-
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='service_requests')
 
 # Monitoring Log Model
 class Monitoring_log(db.Model):
@@ -112,8 +114,6 @@ class Monitoring_log(db.Model):
     week_ending = db.Column(db.String(40))
 
     image_url = db.Column(db.String(500))
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='monitoring_logs')
 
 # User Model
 class User(db.Model, UserMixin):
@@ -125,8 +125,6 @@ class User(db.Model, UserMixin):
     admin = db.Column(db.Boolean)
     sudo = db.Column(db.Boolean)
 
-    # Many-to-Many Relationship
-    assignments = db.relationship('Soil_testing', secondary=assignments, backref='users')
 
 # Ponds Model
 class Ponds(db.Model):
@@ -141,8 +139,6 @@ class Ponds(db.Model):
     monitoring_frequency=(db.String(400))
     image_url = db.Column(db.String(500))
 
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='ponds')
 
 # Units Model
 class Units(db.Model):
@@ -158,8 +154,6 @@ class Units(db.Model):
     last_serviced = db.Column(db.String(40))
     issue_list = db.Column(db.String(500))
     image_url = db.Column(db.String(500))
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='units')
 
 # Units Model
 class Job_cards(db.Model):
@@ -174,18 +168,3 @@ class Job_cards(db.Model):
     comments = db.Column(db.String(500))
     unit_type = db.Column(db.String(40))
     floc_type = db.Column(db.String(40))
-    # Many-to-Many Relationship
-    assignments = db.relationship('User', secondary=assignments, backref='job_cards')
-    
-# Association Table for Many-to-Many Relationships
-assignments = db.Table('assignments',
-    db.Column('id', db.Integer, primary_key=True),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('unit_id', db.Integer, db.ForeignKey('units.id')),
-    db.Column('pond_id', db.Integer, db.ForeignKey('ponds.id')),
-    db.Column('soil_test_id', db.Integer, db.ForeignKey('soil_testing.id')),
-    db.Column('monitoring_log_id', db.Integer, db.ForeignKey('monitoring_log.id')),
-    db.Column('stocktake_id', db.Integer, db.ForeignKey('stocktake.id')),
-    db.Column('service_request_id', db.Integer, db.ForeignKey('service_request.id')),
-    db.Column('job_card_id', db.Integer, db.ForeignKey('job_cards.id')),
-)
